@@ -369,47 +369,35 @@ const TinyMCEEditor: React.FC<TinyMCEEditorProps> = ({
     };
 
     return (
-        <div style={{ width: '100%' }}>
+        <div style={{ width: '100%' ,display:'flex'}}>
             {/* 模式切换按钮 */}
             <div style={{
                 marginBottom: '15px',
                 display: 'flex',
+                flexDirection: 'column',
                 gap: '15px',
                 alignItems: 'center',
                 padding: '10px',
-                backgroundColor: '#f5f5f5',
                 borderRadius: '8px'
             }}>
                 <button
                     onClick={() => toggleMode(false)}
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#1976d2',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                    }}
+                    className='cust-btn'
                 >
                     富文本编辑器
                 </button>
 
                 <button
                     onClick={() => toggleMode(true)}
-                    style={{
-                        padding: '10px 20px',
-                        backgroundColor: '#1976d2',
-                        color: 'white',
-                        border: 'none',
-                        borderRadius: '6px',
-                        cursor: 'pointer',
-                        fontSize: '14px',
-                        fontWeight: 'bold'
-                    }}
+                    className='cust-btn'
                 >
                    Markdown编辑器
+                </button>
+
+                <button
+                    className='cust-btn'
+                >
+                    Markdown编辑器
                 </button>
                
             </div>

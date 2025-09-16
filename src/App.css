@@ -78,6 +78,18 @@
   font-size: 0.9em;
 }
 
+.cust-btn {
+    padding: 10px 20px;
+    background-color: #1976d2;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: bold;
+    width: calc(120/1920*100vw);
+}
+
 .markdown-preview pre {
   background: #f4f4f4;
   padding: 1em;
