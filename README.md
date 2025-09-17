@@ -1,5 +1,55 @@
-# Vue 3 + TypeScript + Vite
+# My Vue 2 Project
 
-This template should help get you started developing with Vue 3 and TypeScript in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+This is a simple Vue 2 project created to demonstrate the basic structure and setup of a Vue application.
 
-Learn more about the recommended Project Setup and IDE Support in the [Vue Docs TypeScript Guide](https://vuejs.org/guide/typescript/overview.html#project-setup).
+## Project Structure
+
+```
+my-vue2-project
+├── src
+│   ├── main.js          # Entry point of the application
+│   ├── App.vue          # Root component
+│   ├── components
+│   │   └── HelloWorld.vue # Example component
+│   └── assets
+│       └── styles.css   # Global styles
+├── public
+│   └── index.html       # Main HTML file
+├── package.json         # npm configuration
+├── babel.config.js      # Babel configuration
+└── README.md            # Project documentation
+```
+
+## Installation
+
+To get started with this project, clone the repository and install the dependencies:
+
+```bash
+git clone <repository-url>
+cd my-vue2-project
+npm install
+```
+
+## Running the Application
+
+To run the application in development mode, use the following command:
+
+```bash
+npm run serve
+```
+
+The application will be available at `http://localhost:8080`.
+
+## Build for Production
+
+To build the application for production, use:
+
+```bash
+npm run build
+```
+
+This will create an optimized version of the application in the `dist` directory.
+
+## License
+
+This project is licensed under the MIT License.
