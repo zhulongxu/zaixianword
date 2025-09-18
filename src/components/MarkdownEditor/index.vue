@@ -116,3 +116,10 @@ export default {
   }
 }
 </script>
+
+<style scoped>
+.tui-editor .te-preview-style-vertical .te-preview {
+    width: 50vw !important;
+    background-color: #000 !important;
+}
+</style>

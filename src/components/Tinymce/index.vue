@@ -4,24 +4,7 @@
         <div class="editor-custom-btn-container">
             <!-- <editorImage color="#1890ff" class="editor-upload-btn" @successCBK="imageSuccessCBK" /> -->
 
-            <!-- <img class="tool-img" src="/save.svg" alt="" srcset=""> -->
-            <img class="tool-img zhen" src="/zhen.svg" alt="11" srcset="">
-            <img class="tool-img zhen" src="/print.svg" alt="11" srcset="">
             <img class="tool-img" src="/save.svg" alt="11" srcset="">
-        </div>
-
-        <!-- 上传word pdf 编辑 -->
-
-
-        <div class="footer">
-            <button>
-                DOCX
-                <img class="tool-img" src="/eword.svg" alt="" srcset="">
-            </button>
-            <button>
-                PDF
-                <img class="tool-img" src="/pdf.svg" alt="" srcset="">
-            </button>
         </div>
     </div>
 </template>
@@ -204,30 +187,6 @@ export default {
 .tinymce-container {
     position: relative;
     line-height: normal;
-}
-
-.footer {
-    display: flex;
-    justify-content: start;
-    border-top: 1px solid #eee;
-    padding-top: 1vh;
-
-    .tool-img {
-        width: calc(15/1920 * 100vw);
-    }
-
-    button {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        margin-right: 10px;
-        cursor: pointer;
-        background-color: #e3f2fd;
-        width: calc(60/1920 * 100vw);
-        height: calc(30/1920 * 100vw);
-        border: none;
-        border-radius: calc(4/1920 * 100vw);
-    }
 }
 
 .tinymce-container {
