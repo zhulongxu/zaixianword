@@ -7,11 +7,6 @@
             <markdown-editor ref="markdownEditor" v-model="content1" height="1200px" :language="language" />
         </div>
 
-        <!-- <button style="margin-top:80px;" type="primary" icon="icon-document" @click="getHtml">
-            Get HTML
-        </button> -->
-        <!-- <div v-html="html" /> -->
-
         <div class="seo-container">
             <div class="faq-accordion" role="tablist" aria-label="Markdown 使用说明">
                 <div
@@ -54,6 +49,10 @@
 
 <script>
 import MarkdownEditor from './MarkdownEditor/index.vue'
+/**
+ * 待开发任务
+ * 1. 支持预览框折叠和展开
+ */
 
 const content = `
 # 南京景区概览报告
@@ -261,108 +260,10 @@ export default {
 .tag-title {
     margin-bottom: 5px;
 }
-/* seo / faq */
-.seo-container {
-    padding: 8px 16px 40px;
-    display: flex;
-    justify-content: center;
-}
 
 .faq-accordion {
     width: 100%;
-    max-width: 60vw;
-    display: grid;
-    gap: 12px;
-}
-
-.faq-card {
-    background: #f3f7fa;
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(16, 24, 40, 0.06);
-    overflow: hidden;
-    border: 1px solid rgba(15, 23, 42, 0.04);
-}
-
-.faq-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 18px;
-    background: linear-gradient(180deg, rgba(250, 250, 252, 1), rgba(245, 247, 250, 1));
-    border: none;
-    cursor: pointer;
-    text-align: left;
-    font-weight: 600;
-    color: #0b0b0b;
-    width: 100%;
-}
-
-.faq-title {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    font-size: 15px;
-}
-
-.faq-icon svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-    color: #0b68d8;
-    opacity: 0.95;
-}
-
-.chev {
-    display: inline-flex;
-    width: 22px;
-    height: 22px;
-    align-items: center;
-    justify-content: center;
-    color: #6b7280;
-    transition: transform .22s ease;
-}
-
-.chev.open {
-    transform: rotate(180deg);
-    color: #0b68d8;
-}
-
-.faq-panel {
-    padding: 14px 18px;
-    background: linear-gradient(180deg, #ffffff, #fbfdff);
-    color: #333;
-    line-height: 1.6;
-    border-top: 1px solid rgba(15, 23, 42, 0.03);
-}
-
-.faq-body pre {
-    background: #0f1724;
-    color: #e6eef8;
-    padding: 12px;
-    border-radius: 6px;
-    overflow: auto;
-}
-
-.faq-collapse-enter-active,
-.faq-collapse-leave-active {
-    transition: all .28s cubic-bezier(.2, .9, .2, 1);
-}
-
-.faq-collapse-enter,
-.faq-collapse-leave-to {
-    opacity: 0;
-    transform: translateY(-6px);
-}
-
-/* responsive */
-@media (max-width: 720px) {
-    .faq-accordion {
-        padding: 8px;
-        gap: 8px;
-    }
-
-    .faq-header {
-        padding: 12px;
-    }
+    max-width: 80vw;
+  
 }
 </style>

@@ -3,7 +3,7 @@
         <div class="tabs">
             <div class="tabs-inner">
                 <img class="logo-img" src="/favicon.svg" title="ZaixianWord" />
-                <div style="margin-right: 10vw;">
+                <div class="tabs-right">
                     <div
                          v-for="tab in tabs"
                          :key="tab.name"
@@ -13,19 +13,42 @@
                         <span class="tab-icon" v-html="lang === 'zh' ? tab.icon : tab.icon_en"></span>
                         <span class="tab-label">{{ lang === 'zh' ? tab.label : tab.label_en }}</span>
                     </div>
+
+                    <!-- 中英文切换 -->
+                    <div class="lang-toggle" role="region" aria-label="language toggle">
+                        <button
+                                class="theme-toggle"
+                                :aria-pressed="isDark"
+                                :title="isDark ? (lang === 'zh' ? '切换到浅色' : 'Switch to light') : (lang === 'zh' ? '切换到深色' : 'Switch to dark')"
+                                @click="toggleTheme">
+                            <span class="theme-icon" aria-hidden="true">
+                                <svg v-if="!isDark" viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <path d="M12 3v2M12 19v2M4.2 4.2l1.4 1.4M18.4 18.4l1.4 1.4M1 12h2M21 12h2M4.2 19.8l1.4-1.4M18.4 5.6l1.4-1.4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+
+                                    <circle cx="12" cy="12" r="4" fill="currentColor" />
+
+                                </svg>
+                                <svg v-else viewBox="0 0 24 24" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                                    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" fill="currentColor" />
+
+                                </svg>
+                            </span>
+                        </button>
+
+                        <button
+                                class="lang-btn"
+                                @click="changeLang"
+                                :title="lang === 'zh' ? '切换到英文' : 'Switch to Chinese'">
+                            <span class="lang-icon" v-html="lang === 'zh' ? '🇨🇳' : '🇺🇸'"></span>
+                            <span class="lang-text">{{ lang === 'zh' ? '切换到英文' : 'Switch to Chinese' }}</span>
+                        </button>
+                    </div>
                 </div>
             </div>
 
-            <!-- 中英文切换 -->
-            <div class="lang-toggle" role="region" aria-label="language toggle">
-                <button
-                        class="lang-btn"
-                        @click="lang = lang === 'zh' ? 'en' : 'zh'"
-                        :title="lang === 'zh' ? '切换到英文' : 'Switch to Chinese'">
-                    <span class="lang-icon" v-html="lang === 'zh' ? '🇨🇳' : '🇺🇸'"></span>
-                    <span class="lang-text">{{ lang === 'zh' ? '切换到英文' : 'Switch to Chinese' }}</span>
-                </button>
-            </div>
+
         </div>
         <div class="tab-content">
             <Tinymce v-model="content" :height="1200" v-if="activeTab === 'rich'" />
@@ -45,6 +68,15 @@
 import Tinymce from './components/Tinymce/index.vue'
 import MarkdownEditor from './components/MarkDown.vue'
 import AppFooter from './components/footer/index.vue'
+/**
+ * 开发任务
+ * 1. OCR 识别功能
+ * 2. 支持本地保存和加载
+ * 3. 支持多种导出格式（PDF、Word、HTML等）
+ * 4. 支持主题切换（浅色、深色模式）
+ * 5. 支持更多语言（法语、德语、西班牙语等  【语言切换还有问题】
+ * 
+ */
 
 export default {
     name: 'App',
@@ -53,6 +85,7 @@ export default {
         return {
             lang: 'zh',
             activeTab: 'rich',
+            isDark: localStorage.getItem('zaixian_theme') === 'dark',
             tabs: [
                 {
                     name: 'rich',
@@ -68,13 +101,13 @@ export default {
                     icon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4v16h14V4H5zm2 4h2l2 4 2-4h2v8h-2v-4l-2 4-2-4v4H7V8z"/></svg>`,
                     icon_en: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4v16h14V4H5zm2 4h2l2 4 2-4h2v8h-2v-4l-2 4-2-4v4H7V8z"/></svg>`
                 },
-                // {
-                //     name: 'ocr',
-                //     label: 'OCR识别',
-                //     label_en: 'OCR Recognition',
-                //     icon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`,
-                //     icon_en: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`
-                // }
+                {
+                    name: 'ocr',
+                    label: 'OCR识别',
+                    label_en: 'OCR Recognition',
+                    icon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`,
+                    icon_en: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`
+                }
             ],
             content: localStorage.getItem('editorContent') || `
 <h1 style="margin-bottom:8px;">美国主要城市概览</h1>
@@ -139,7 +172,7 @@ export default {
     },
     created() {
         let lang = (navigator.language || navigator.userLanguage).toLowerCase()
-
+        this.applyTheme(this.isDark)
         // 查看用户 IP 地址
         // fetch('https://api.ipify.org?format=json')
         //     .then(response => response.json())
@@ -160,7 +193,30 @@ export default {
         //     });
     },
     methods: {
+        changeLang() {
+            // 根据 浏览器语言 动态设置 title 标题
+            if (this.lang === 'zh-cn' || this.lang === 'zh') {
 
+                document.title = 'Online Rich Text Editor - Online MarkDown Editor, Online Word Editing, Professional Rich Text Editor, Professional MarkDown Editor'
+            } else {
+                document.title = '在线富文本编辑器-在线MarkDown编辑器、在线Word编辑、专业富文本编辑器、专业MarkDown编辑器'
+
+            }
+            this.lang = this.lang === 'zh' ? 'en' : 'zh';
+        },
+        toggleTheme() {
+            this.isDark = !this.isDark
+            localStorage.setItem('zaixian_theme', this.isDark ? 'dark' : 'light')
+            this.applyTheme(this.isDark)
+        },
+        applyTheme(dark) {
+            const root = document.documentElement
+            if (dark) {
+                root.setAttribute('data-theme', 'dark')
+            } else {
+                root.setAttribute('data-theme', 'light')
+            }
+        }
     }
 };
 </script>
@@ -288,11 +344,18 @@ export default {
     color: #888;
 }
 
+.tabs-right {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
 .lang-toggle {
-    position: absolute;
-    top: 10px;
-    right: 20vw;
-    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-left: 2vw;
+    
 }
 
 .lang-btn {
@@ -345,4 +408,65 @@ export default {
         gap: 6px;
     }
 }
+
+/* 主题切换 */
+.theme-toggle {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 42px;
+    height: 32px;
+    margin-right: 12px;
+    border-radius: 20px;
+    border: 1px solid rgba(11, 104, 216, 0.12);
+    background: linear-gradient(180deg, #ffffff, #f3f7ff);
+    color: #0b0b0b;
+    cursor: pointer;
+    transition: background .18s ease, transform .12s ease, box-shadow .18s ease, color .18s ease;
+    padding: 4px;
+}
+
+.theme-toggle:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(11, 104, 216, 0.10);
+}
+
+.theme-toggle .theme-icon svg {
+    display: block;
+    color: #0b68d8;
+}
+
+/* 当为暗色主题时，切换按钮变为深色底 + 白色图标 */
+[data-theme="dark"] .theme-toggle {
+    background: linear-gradient(180deg, #2b2b2b, #151515);
+    color: #fff;
+    border-color: rgba(255, 255, 255, 0.06);
+}
+
+[data-theme="dark"] .theme-toggle .theme-icon svg {
+    color: #ffd66b;
+}
+
+/* 微交互：切换时图标平滑切换 */
+.theme-toggle .theme-icon svg {
+    transition: opacity .18s ease, transform .2s ease;
+}
+
+.theme-toggle .theme-icon svg[v-cloak] {
+    opacity: 0;
+}
+
+/* 可访问性 focus */
+.theme-toggle:focus-visible {
+    outline: 3px solid rgba(11, 104, 216, 0.14);
+    outline-offset: 2px;
+}
+
+/* 如果希望页面其他元素根据 data-theme 变色，可在全局样式继续扩展，例如： */
+:root[data-theme='dark'] {
+    --bg: #0f1720;
+    --text: #e6eef8;
+}
+
+/* 注意：documentElement 上设置 data-theme（applyTheme 方法）用于全站样式控制 */
 </style>
