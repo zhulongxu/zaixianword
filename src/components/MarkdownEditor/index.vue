@@ -122,4 +122,9 @@ export default {
     width: 50vw !important;
     background-color: #000 !important;
 }
+
+.tui-export-html {
+    background-color: red !important;
+}
+
 </style>

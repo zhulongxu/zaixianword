@@ -1,0 +1,111 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    margin: 0;
+    padding: 0;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    background-color: #42b983;
+    color: white;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #36a76a;
+}
+
+/* 覆盖 tinyMCE样式 */
+.tinymce-container {
+    width: 60vw !important;
+    margin: 0 auto;
+}
+
+
+/* 覆盖 TUI 编辑器自定义按钮样式（全局） */
+
+.markdown-box{
+    width: 80vw;
+    margin: 0 auto;
+}
+
+.tui-editor .te-preview-style-vertical .te-preview {
+    width: 40vw;
+}
+
+.tui-export-html,
+.toastui-toolbar .tui-export-html,
+.toastui-editor .tui-export-html {
+    background: linear-gradient(135deg, #ff8a65 0%, #ff7043 100%);
+    color: #fff;
+    border: none;
+    padding: 6px 10px;
+    border-radius: 6px;
+    font-weight: 600;
+    box-shadow: 0 6px 14px rgba(255, 112, 67, 0.12);
+    cursor: pointer;
+}
+
+/* 如果按钮内部使用 <button> 元素，再覆盖它 */
+.tui-export-html button,
+.tui-export-html>button {
+    background: transparent;
+    color: inherit;
+    border: none;
+    padding: 0;
+    font: inherit;
+}
+
+/* 通用按钮样式 */
+.tui-editor-defaultUI-toolbar button {
+}
+
+/* 强制生效（仅在必要时） */
+.tui-export-html {
+    background: #ff7043 !important;
+}
+
+/* 强制编辑区与预览左对齐，覆盖可能的居中样式 */
+.toastui-editor,
+.tui-editor,
+.tui-editor .te-preview,
+.tui-editor .te-editor,
+.tui-editor .te-preview .te-preview-content,
+.tui-editor .te-editor .te-edit-area {
+    text-align: left !important;
+}
+
+/* 如果是 vertical 预览模式，强制预览区左对齐 */
+.tui-editor .te-preview-style-vertical .te-preview {
+    text-align: left !important;
+}
+
+/* 如需为输出段落设置默认对齐： */
+.tui-editor .te-preview p,
+.tui-editor .te-editor p {
+    text-align: left !important;
+}
