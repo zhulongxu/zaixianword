@@ -196,11 +196,9 @@ export default {
         changeLang() {
             // 根据 浏览器语言 动态设置 title 标题
             if (this.lang === 'zh-cn' || this.lang === 'zh') {
-
-                document.title = 'Online Rich Text Editor - Online MarkDown Editor, Online Word Editing, Professional Rich Text Editor, Professional MarkDown Editor'
+                document.title = 'ZaixianWord — Online Rich Text and Markdown Editor'
             } else {
-                document.title = '在线富文本编辑器-在线MarkDown编辑器、在线Word编辑、专业富文本编辑器、专业MarkDown编辑器'
-
+                document.title = 'ZaixianWord — 在线富文本与 Markdown 编辑器'
             }
             this.lang = this.lang === 'zh' ? 'en' : 'zh';
         },

@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://zaixianword.top/sitemap.xml
