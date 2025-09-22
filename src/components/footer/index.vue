@@ -97,161 +97,7 @@ export default {
 }
 </script>
 
-<style scoped>
-.site-footer {
-    background: linear-gradient(180deg, #ffffff, #f4f6f9);
-    color: #233039;
-    padding: 32px 16px 20px;
-    border-top: 1px solid rgba(35, 48, 57, 0.06);
-    font-size: 14px;
-    margin-top: 10px;
-}
 
-.footer-inner {
-    max-width: 1100px;
-    margin: 0 auto;
-    display: grid;
-    grid-template-columns: 1.6fr 1fr 1fr;
-    gap: 20px;
-    align-items: start;
-}
-
-.brand {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-}
-
-.logo-svg {
-    width: 56px;
-    height: 56px;
-    border-radius: 8px;
-    transition: transform .4s ease;
-}
-
-.logo-svg:hover {
-    transform: rotate(12deg) scale(1.02);
-}
-
-.brand-text .title {
-    font-weight: 700;
-    color: #0b0b0b;
-    font-size: 16px;
-}
-
-.brand-text .tagline {
-    font-size: 12px;
-    color: #6b7280;
-}
-
-.desc {
-    margin-top: 12px;
-    color: #415057;
-    line-height: 1.6;
-    max-width: 44ch;
-}
-
-/* links */
-.footer-col h4 {
-    margin: 0 0 10px;
-    font-size: 15px;
-    color: #0b0b0b;
-}
-
-.footer-col ul {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.footer-col a {
-    color: #0b68d8;
-    text-decoration: none;
-}
-
-.footer-col a:hover {
-    text-decoration: underline;
-}
-
-/* contact & social */
-.contact address {
-    font-style: normal;
-    color: #415057;
-    line-height: 1.6;
-}
-
-.social {
-    margin-top: 10px;
-    display: flex;
-    gap: 8px;
-}
-
-.social-btn {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 34px;
-    height: 34px;
-    border-radius: 8px;
-    background: #fff;
-    color: #0b0b0b;
-    box-shadow: 0 4px 10px rgba(11, 11, 11, 0.06);
-    transition: transform .18s ease, box-shadow .18s ease;
-}
-
-.social-btn:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 8px 18px rgba(11, 11, 11, 0.08);
-}
-
-.social-btn svg {
-    width: 18px;
-    height: 18px;
-}
-
-/* bottom bar */
-.footer-bottom {
-    max-width: 1100px;
-    margin: 18px auto 0;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 10px;
-    padding-top: 18px;
-    border-top: 1px solid rgba(35, 48, 57, 0.04);
-}
-
-.policy a {
-    color: #556;
-    text-decoration: none;
-    margin: 0 6px;
-}
-
-.policy a:hover {
-    text-decoration: underline;
-    color: #0b68d8;
-}
-
-.sep {
-    color: #c8ccd0;
-    margin: 0 6px;
-}
-
-/* responsive */
-@media (max-width: 900px) {
-    .footer-inner {
-        grid-template-columns: 1fr;
-    }
-
-    .footer-bottom {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 8px;
-    }
-}
-</style>
-```// filepath: d:\mycodes\zaixianword\worddemo\src\components\footer\index.vue
-// ...existing code...
 <template>
     <footer class="site-footer" role="contentinfo" aria-label="site footer">
         <div class="footer-inner">
@@ -357,8 +203,8 @@ export default {
 
 <style scoped>
 .site-footer {
-    background: linear-gradient(180deg, #ffffff, #f4f6f9);
-    color: #233039;
+    background-color: var(--bg-color);
+    color: var(--text-color);
     padding: 32px 16px 20px;
     border-top: 1px solid rgba(35, 48, 57, 0.06);
     font-size: 14px;
@@ -392,18 +238,18 @@ export default {
 
 .brand-text .title {
     font-weight: 700;
-    color: #0b0b0b;
+    color: var(--text-color);
     font-size: 16px;
 }
 
 .brand-text .tagline {
     font-size: 12px;
-    color: #6b7280;
+    color: var(--text-color);
 }
 
 .desc {
     margin-top: 12px;
-    color: #415057;
+    color: var(--text-color);
     line-height: 1.6;
     max-width: 44ch;
 }
@@ -412,7 +258,7 @@ export default {
 .footer-col h4 {
     margin: 0 0 10px;
     font-size: 15px;
-    color: #0b0b0b;
+    color: var(--text-color);
 }
 
 .footer-col ul {
@@ -433,7 +279,7 @@ export default {
 /* contact & social */
 .contact address {
     font-style: normal;
-    color: #415057;
+    color: var(--text-color);
     line-height: 1.6;
 }
 
@@ -451,7 +297,7 @@ export default {
     height: 34px;
     border-radius: 8px;
     background: #fff;
-    color: #0b0b0b;
+    color: var(--text-color);
     box-shadow: 0 4px 10px rgba(11, 11, 11, 0.06);
     transition: transform .18s ease, box-shadow .18s ease;
 }
@@ -479,7 +325,7 @@ export default {
 }
 
 .policy a {
-    color: #556;
+    color: var(--text-color);
     text-decoration: none;
     margin: 0 6px;
 }
@@ -490,7 +336,7 @@ export default {
 }
 
 .sep {
-    color: #c8ccd0;
+    color: var(--text-color);
     margin: 0 6px;
 }
 

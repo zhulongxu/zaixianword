@@ -1,6 +1,6 @@
 <template>
     <div class="components-container">
-        <div class="markdown-toolbar">
+        <div class="markdown-toolbar title-nav">
             MarkDown 编辑器
         </div>
         <div class="editor-container">

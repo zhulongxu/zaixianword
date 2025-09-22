@@ -1,14 +1,15 @@
 <template>
     <div id="app">
         <div class="tabs">
+
             <div class="tabs-inner">
-                <img class="logo-img" src="/favicon.svg" title="ZaixianWord" />
+                    <img class="logo-img" src="/favicon.svg" title="ZaixianWord" />
                 <div class="tabs-right">
                     <div
                          v-for="tab in tabs"
                          :key="tab.name"
                          :class="['tab', { active: tab.name === activeTab }]"
-                         @click="activeTab = tab.name"
+                         @click="changeTab(tab)"
                          :title="lang === 'zh' ? tab.label : tab.label_en">
                         <span class="tab-icon" v-html="lang === 'zh' ? tab.icon : tab.icon_en"></span>
                         <span class="tab-label">{{ lang === 'zh' ? tab.label : tab.label_en }}</span>
@@ -59,7 +60,6 @@
                 <h2>{{ lang === 'zh' ? 'OCR识别' : 'OCR Recognition' }}</h2>
             </div>
         </div>
-
         <AppFooter />
     </div>
 </template>
@@ -101,72 +101,38 @@ export default {
                     icon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4v16h14V4H5zm2 4h2l2 4 2-4h2v8h-2v-4l-2 4-2-4v4H7V8z"/></svg>`,
                     icon_en: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M5 4v16h14V4H5zm2 4h2l2 4 2-4h2v8h-2v-4l-2 4-2-4v4H7V8z"/></svg>`
                 },
-                {
-                    name: 'ocr',
-                    label: 'OCR识别',
-                    label_en: 'OCR Recognition',
-                    icon: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`,
-                    icon_en: `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M3 6h18v12H3z" fill="none"/><path d="M5 8h14v8H5zM7 10h2v2H7zM11 10h6v2h-6z"/></svg>`
-                }
             ],
             content: localStorage.getItem('editorContent') || `
-<h1 style="margin-bottom:8px;">美国主要城市概览</h1>
-<p><strong>简介：</strong>以下为若干代表性城市的简要介绍与旅行/工作建议，便于快速了解每个城市的亮点与出行提示。</p>
+            <div style="margin: 0; padding: 140px; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;">
 
-<hr/>
+        <!-- 头部 -->
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="margin: 0; font-size: 32px; letter-spacing: 2px; color: #2c3e50;">离职证明</h1>
+        </div>
 
-<h2>纽约（New York City）</h2>
-<p>美国最大城市，金融、文化与艺术中心。推荐景点：<strong>曼哈顿时代广场</strong>、<strong>中央公园</strong>、<strong>大都会艺术博物馆</strong>。</p>
-<ul>
-  <li>亮点：多元文化、世界级博物馆与剧院。</li>
-  <li>提示：地铁方便但高峰拥挤，住宿预算较高。</li>
-</ul>
-<p><img src="https://images.unsplash.com/photo-1549923746-c502d488b3ea?w=1200&q=60" alt="New York" style="max-width:100%;height:auto;border-radius:6px;margin-top:8px;" /></p>
+        <!-- 正文 -->
+        <div style="line-height: 1.8; font-size: 16px; text-align: justify;">
+            <p>兹证明 <strong style="color: #667eea;">张三</strong>（身份证号：110101199001011234）自 <strong style="color: #667eea;">2019年7月1日</strong> 起在我公司 <strong style="color: #667eea;">XX科技有限公司</strong> 任职，担任 <strong style="color: #667eea;">前端开发工程师</strong> 岗位。</p>
+            <p>因个人职业发展规划，已于 <strong style="color: #667eea;">2024年6月30日</strong> 正式办理完离职手续，与我公司解除劳动关系。在职期间表现良好，无不良记录，并完成所有工作交接。</p>
+            <p>特此证明。</p>
+        </div>
 
-<h2>洛杉矶（Los Angeles）</h2>
-<p>影视娱乐业中心，适合自驾与海滨游。推荐景点：<strong>好莱坞星光大道</strong>、<strong>格里菲斯天文台</strong>、<strong>圣塔莫尼卡海滩</strong>。</p>
-<ul>
-  <li>亮点：阳光、沙滩与创意产业。</li>
-  <li>提示：交通以开车为主，市区较为分散。</li>
-</ul>
+        <!-- 落款 -->
+        <div style="margin-top: 60px; text-align: right;">
+            <div style="font-size: 16px; font-weight: 600;">XX科技有限公司</div>
+            <div style="font-size: 14px; color: #666; margin-top: 8px;">2024年7月5日</div>
+        </div>
 
-<h2>芝加哥（Chicago）</h2>
-<p>中西部重要城市，以建筑与音乐闻名。推荐景点：<strong>密歇根湖滨</strong>、<strong>云门（The Bean）</strong>、<strong>芝加哥艺术学院</strong>。</p>
-<ul>
-  <li>亮点：独特摩天大楼与爵士/蓝调文化。</li>
-  <li>提示：冬季寒冷，夏季湖畔风景优美。</li>
-</ul>
+        <!-- 印章区域 -->
+        <div style="margin-top: 40px; text-align: right;">
+            <div style="display: inline-block; width: 100px; height: 100px; border: 3px solid #e74c3c; border-radius: 50%; text-align: center; line-height: 100px; font-size: 14px; color: #e74c3c; letter-spacing: 1px; user-select: none;">电子印章</div>
+        </div>
 
-<h2>旧金山（San Francisco）</h2>
-<p>科技与创意聚集地，地形起伏。推荐景点：<strong>金门大桥</strong>、<strong>渔人码头</strong>、<strong>九曲花街</strong>。</p>
-<ul>
-  <li>亮点：硅谷近邻、咖啡与创意氛围浓厚。</li>
-  <li>提示：早晚温差大，常有雾，注意备衣。</li>
-</ul>
-
-<h2>华盛顿特区（Washington, D.C.）</h2>
-<p>美国政治中心，历史与博物馆资源丰富。推荐：<strong>国家广场</strong>、<strong>史密森学会博物馆群</strong>、<strong>国会山</strong>。</p>
-<ul>
-  <li>亮点：博物馆多为免费，文化资源集中。</li>
-  <li>提示：政府活动可能影响交通与出入。</li>
-</ul>
-
-<h2>西雅图（Seattle）</h2>
-<p>西北部科技与咖啡文化重镇。推荐：<strong>派克市场</strong>、<strong>太空针塔</strong>、周边自然徒步路线。</p>
-
-<h2>迈阿密（Miami）</h2>
-<p>热带海滩与拉美文化融合，适合度假与夜生活。推荐：<strong>南海滩</strong>、<strong>小哈瓦那</strong>。</p>
-
-<hr/>
-
-<h3>旅行小贴士</h3>
-<ol>
-  <li>季节选择：北方城市春秋最佳，南部冬季气候温暖。</li>
-  <li>交通建议：大城市优先使用公共交通或网约车；若计划跨城游，多考虑航班或长途巴士。</li>
-  <li>安全与预算：大城市人流密集，注意保管随身物品；提前预订可节省住宿成本。</li>
-</ol>
-
-<p style="margin-top:12px;color:#666;font-size:13px;">本文为简要概览，图片为示例，请根据实际行程与偏好做详细规划。</p>
+        <!-- 底部提示 -->
+        <div style="margin-top: 60px; font-size: 12px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+            本证明一式两份，员工与公司各执一份，具有同等法律效力。
+        </div>
+</div>
 `
         };
     },
@@ -193,6 +159,15 @@ export default {
         //     });
     },
     methods: {
+        changeTab(tab) {
+            if (tab.name === 'markdown') {
+                // 切换到 markdown 编辑器时，滚动到顶部
+                setTimeout(() => {
+                    window.scrollTo(0, 0);
+                },0)
+            }
+            this.activeTab = tab.name
+        },
         changeLang() {
             // 根据 浏览器语言 动态设置 title 标题
             if (this.lang === 'zh-cn' || this.lang === 'zh') {
@@ -237,15 +212,17 @@ export default {
     -webkit-tap-highlight-color: transparent;
 }
 
+/* tab */
 .tabs {
     /* display: flex;
     justify-content: center; */
-    background: #f3f7fa;
+    background: var(--bg-color);
     border-bottom: 1px solid #cdcdcd;
     box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
     gap: 12px;
     padding: 10px 16px;
 }
+
 
 /* tab item */
 .tab {
@@ -255,7 +232,7 @@ export default {
     padding: 10px 18px;
     border-radius: 10px;
     cursor: pointer;
-    color: #556;
+    color: var(--text-color);
     font-weight: 500;
     transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease, color 180ms ease;
     border-bottom: 2px solid transparent;
@@ -263,7 +240,7 @@ export default {
 }
 
 .tabs-inner {
-    width: 60vw;
+    width: 45vw;
     margin: 0 auto;
     display: flex;
     justify-content: space-between;
@@ -326,14 +303,6 @@ export default {
         padding: 8px 12px;
         font-size: 13px;
     }
-}
-
-/* keep existing tab-content styles */
-.tab-content {
-    min-height: 70vh;
-    background: #f9f9f9;
-    border-radius: 0 0 8px 8px;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.03);
 }
 
 .markdown-box,

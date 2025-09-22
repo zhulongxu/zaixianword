@@ -1,33 +1,30 @@
 <template>
     <div>
         <div class="tinyMCE-toolbar">
-            <div>
+            <div class="title-nav">
                 富文本编辑器
             </div>
 
             <div>
-                <span >
-                 {{ lang.startsWith('zh') ? '在线模板:' : 'Online Template:' }}
+                <span>
+                    {{ lang.startsWith('zh') ? '在线模板:' : 'Online Template:' }}
                 </span>
-                <select v-model="selectedKey" name="" id="" @change="selectChange" @click="selectClick">
-                    <option disabled value="">{{ lang.startsWith('zh') ? '请选择证明模板' : 'Select a proof template' }}</option>
-                    <option value="txzm">通用证明</option>
-                    <option value="lzzm">离职证明</option>
-                    <option disabled value="">{{ lang.startsWith('zh') ? '请选择申请模板' : 'Select a application template' }}</option>
-                    <option value="qjt">请假条</option>
-                    <option value="lzsq">离职申请</option>
-                    <option disabled value="">{{ lang.startsWith('zh') ? '请选择通知模板' : 'Select a notice template' }}</option>
-                    <option value="hytz">会议通知</option>
-                    <option value="fjtz">放假通知</option>
-                    <option value="mstz">面试通知</option>
-                    <option value="hdtz">活动通知</option>
-                    <option value="zbtz">中标通知</option>
-                    <option disabled value="">{{ lang.startsWith('zh') ? '请选择其他模板' : 'Select a other template' }}</option>
-                    <option value="msjl">面试简历</option>
-                    <option value="djbt">多级标题</option>
-                    <option value="jhg">讲话稿</option>
-                    <option value="hyjy">会议纪要</option>
-                </select>
+
+                <button class="zhen" @click="setdefineContent('离职证明')">
+                    离职证明
+                </button>
+                <button class="zhen" @click="setdefineContent('离职申请')">
+                    离职申请
+                </button>
+                <button class="zhen" @click="setdefineContent('面试简历')">
+                    面试简历
+                </button>
+                <button class="zhen" @click="setdefineContent('活动通知')">
+                    活动通知
+                </button>
+                <button class="zhen" @click="setdefineContent('多级标题')">
+                    多级标题
+                </button>
             </div>
         </div>
         <div :class="{ fullscreen: fullscreen }" class="tinymce-container" :style="{ width: containerWidth }">
@@ -142,8 +139,6 @@ export default {
             hasInit: false,
             tinymceId: this.id,
             fullscreen: false,
-            selectedKey: '',      // 当前 select v-model
-            lastSelectedKey: null, // 用来判断重复点击
             languageTypeList: {
                 'en': 'en',
                 'zh': 'zh_CN',
@@ -156,7 +151,9 @@ export default {
                     title: '什么是 富文本，为什么要使用 富文本？',
                     title_en: 'What is Rich Text and why use it?',
                     icon: `<svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5L12 2z" /></svg>`,
-                    content: `<p>富文本是一种可以包含多种格式的文本，使用简洁的语法书写，便于阅读与版本控制，适合写文档、博客与报告。</p>
+                    content: `<p>富文本是一种可以包含多种格式的文本，使用简洁的语法书写，便于阅读与版本控制，适合写文档、博客与报告。
+                        ZaixianWord 提供在线富文本、Markdown ，支持导出 PDF/HTML/Word、模板。快速创建与导出专业文档。在线MarkDown编辑器、在线Word编辑、专业富文本编辑器、专业MarkDown编辑器
+                        </p>
                     <ul><li>易读易写</li><li>可导出为 HTML、PDF 等</li><li>与 git 等工具友好</li></ul>`,
                     content_en: `<p>Rich Text is a type of text that can contain various formats, written with a simple syntax, making it easy to read and version control, suitable for writing documents, blogs, and reports.</p>
                       <ul><li>Readable and writable</li><li>Exportable to HTML/PDF</li><li>Works well with version control</li></ul>`
@@ -185,31 +182,6 @@ export default {
                     content_en: `<p>The editor is built on open-source components and core features are free. Free All</p>`
                 },
             ],
-            selectedTemplate: {
-                // 证明类
-                'txzm': '<h2 style="text-align: center;">证明</h2><p>兹有<span style="text-decoration: underline; color: rgb(0, 0, 0);">张三</span>，身份证号码<span style="text-decoration: underline; color: rgb(0, 0, 0);">123456789012345678</span>，现任职于我公司，职位为<span style="text-decoration: underline; color: rgb(0, 0, 0);">软件工程师</span>，工作表现良好。特此证明。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-                
-                'lzzm': '<h2 style="text-align: center;">离职证明</h2><p>兹有<span style="text-decoration: underline; color: rgb(0, 0, 0);">赵六</span>，身份证号码<span style="text-decoration: underline; color: rgb(0, 0, 0);">556677889900112233</span>，自<span style="text-decoration: underline; color: rgb(0, 0, 0);">2018年3月1日</span>起在我公司工作，担任<span style="text-decoration: underline; color: rgb(0, 0, 0);">销售主管</span>职位。因个人原因，于<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年9月30日</span>离职，工作表现良好。特此证明。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-             
-                // 申请类
-              
-                'qjt': '<h2 style="text-align: center;">请假条</h2><p>尊敬的领导：</p><p>我叫<span style="text-decoration: underline; color: rgb(0, 0, 0);">周九</span>，身份证号码<span style="text-decoration: underline; color: rgb(0, 0, 0);">889   900112233445566</span>，现任职于我公司，职位为<span style="text-decoration: underline; color: rgb(0, 0, 0);">客服专员</span>。因个人原因，特向公司提出请假申请，请假时间为<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月10日至2023年10月15日</span>，共计5天。望予批准。</p><p style="text-align: right;">请假人：<br>日期：2023年10月1日</p>',
-                'lzsq': '<h2 style="text-align: center;">离职申请</h2><p>尊敬的领导：</p><p>我叫<span style="text-decoration: underline; color: rgb(0, 0, 0);">吴十</span>，身份证号码<span style="text-decoration: underline; color: rgb(0, 0, 0);">990011223344556677</span>，现任职于我公司，职位为<span style="text-decoration: underline; color: rgb(0, 0, 0);">技术支持</span>。因个人原因，特向公司提出离职申请，离职时间为<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月31日</span>。望予批准。</p><p style="text-align: right;">申请人：<br>日期：2023年10月1日</p>',
-                // 通知类
-               
-                'hytz': '<h2 style="text-align: center;">会议通知</h2><p>各位同事：</p><p>我公司定于<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月20日</span>召开部门会议，地点为公司会议室，时间为下午2:00。请各位准时参加。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-                'fjtz': '<h2 style="text-align: center;">放假通知</h2><p>各位同事：</p><p>根据国家法定节假日安排，我公司定于<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月1日至2023年10月7日</span>放假，共计7天。请各位提前做好工作安排，节后正常上班。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-                'mstz': '<h2 style="text-align: center;">面试通知</h2><p>尊敬的<span style="text-decoration: underline; color: rgb(0, 0, 0);">张三</span>：</p><p>感谢您对我公司的关注与支持。我公司诚邀您参加面试，面试时间为<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月10日</span>，地点为公司总部，联系人为<span style="text-decoration: underline; color: rgb(0, 0, 0);">李四</span>，联系电话为<span style="text-decoration: underline; color: rgb(0, 0, 0);">123-45678901</span>。请携带相关资料准时参加。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-                'hdtz': '<h2 style="text-align: center;">活动通知</h2><p>各位同事：</p><p>我公司定于<span style="text-decoration: underline; color: rgb(0, 0, 0);">2023年10月25日</span>举办团队建设活动，地点为市郊拓展基地，时间为上午9:00至下午5:00。请各位积极参与，增强团队凝聚力。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-               
-                'zbtz': '<h2 style="text-align: center;">中标通知</h2><p>尊敬的<span style="text-decoration: underline; color: rgb(0, 0, 0);">王五</span>：</p><p>感谢您对我公司的支持与信任。我公司很高兴地通知您，您所投标的项目已中标，项目名称为<span style="text-decoration: underline; color: rgb(0, 0, 0);">智慧城市建设</span>，合同金额为人民币<span style="text-decoration: underline; color: rgb(0, 0, 0);">500万元</span>。请尽快与我公司联系，办理相关手续。</p><p style="text-align: right;">公司名称：<br>日期：2023年10月1日</p>',
-                // 其余模板
-                'msjl': '<h2 style="text-align: center;">面试简历</h2><p><strong>个人信息</strong></p><ul><li>姓名：<span style="text-decoration: underline; color: rgb(0, 0, 0);">张三</span></li><li>联系方式：<span style="text-decoration: underline; color: rgb(0, 0, 0);">123-45678901</span></li><li>电子邮箱：<span style="text-decoration: underline; color: rgb(0, 0, 0);">zhangsan@example.com</span></li></ul><p><strong>教育背景</strong></p><ul><li>某某大学，计算机科学与技术专业，学士学位</li></ul><p><strong>工作经历</strong></p><ul><li>某某公司，软件工程师，负责项目开发与维护</li></ul>',
-
-                'djbt': '<h2 style="text-align: center;">多级标题示例</h2><h1>一级标题</h1><p>这是一级标题下的内容。</p><h2>二级标题</h2><p>这是二级标题下的内容。</p><h3>三级标题</h3><p>这是三级标题下的内容。</p><h4>四级标题</h4><p>这是四级标题下的内容。</p><h5>五级标题</h5><p>这是五级标题下的内容。</p><h6>六级标题</h6><p>这是六级标题下的内容。</p>',
-                'jhg': '<h2 style="text-align: center;">讲话稿 - 自我介绍</h2><p>尊敬的各位领导、同事们：</p><p>大家好！我叫<span style="text-decoration: underline; color: rgb(0, 0, 0);">张三</span>，很荣幸能够加入这个大家庭。今天，我想借此机会向大家做一个简单的自我介绍。</p><p>我毕业于<span style="text-decoration: underline; color: rgb(0, 0, 0);">某某大学</span>，专业是<span style="text-decoration: underline; color: rgb(0, 0, 0);">计算机科学与技术</span>。在校期间，我积极参与各种社团活动，并担任过<span style="text-decoration: underline; color: rgb(0, 0, 0);">学生会主席</span>，锻炼了我的组织协调能力和团队合作精神。</p><p>毕业后，我曾在<span style="text-decoration: underline; color: rgb(0, 0, 0);">某某公司</span>工作，担任<span style="text-decoration: underline; color: rgb(0, 0, 0);">软件工程师</span>职位。在那里，我积累了丰富的项目经验，熟悉了软件开发的各个环节，并且提升了我的技术能力。</p><p>我非常期待在新的工作环境中，能够与大家共同学习、成长。我相信，通过我们的共同努力，一定能够实现公司的目标，并且创造更加辉煌的业绩。</p><p>最后，再次感谢大家的热情欢迎！希望在未来的工作中，能够得到大家的支持与帮助。谢谢大家！</p>',
-                'hyjy': '<h2 style="text-align: center;">会议纪要</h2><p>会议时间：2023年10月1日<br>会议地点：公司会议室<br>主持人：张三<br>记录人：李四</p><h3>会议议题</h3><ul><li>项目进展汇报</li><li>市场营销策略讨论</li><li>员工培训计划制定</li></ul><h3>会议内容</h3><p>1. 项目进展汇报：各项目负责人分别汇报了当前项目的进展情况，遇到的问题以及下一步的计划。</p><p>2. 市场营销策略讨论：市场部提出了新的营销策略，大家进行了热烈的讨论，并提出了宝贵的建议。</p><p>3. 员工培训计划制定：人力资源部介绍了即将开展的员工培训计划，大家一致认为培训内容丰富，形式多样，有助于提升员工的综合素质。</p><h3>会议决议</h3><ul><li>各项目负责人需在下周一前提交详细的项目计划。</li><li>市场部需根据讨论结果调整营销策略，并在下次会议中汇报。</li><li>人力资源部需尽快落实培训计划的具体安排。</li></ul><p>会议结束时间：2023年10月1日 11:30<br>会议记录人：李四</p>'
-            }, // 选择的模板
         }
     },
     computed: {
@@ -244,113 +216,341 @@ export default {
         this.destroyTinymce()
     },
     methods: {
-        toggleFAQ(idx) {
-            this.openIndex = this.openIndex === idx ? -1 : idx
-        },
-        // 当 value 改变时触发（正常情况）
-        selectChange(e) {
-            const val = e && e.target ? e.target.value : this.selectedKey
-            if (!val) return
-            this.lastSelectedKey = val
-            // 继续原有逻辑：根据 key 设置模板内容
-            if (!this.selectedTemplate[val]) {
-                return alert('该模板正在完善中，敬请期待！')
-            }
-            this.setContent(this.selectedTemplate[val])
-        },
+        setdefineContent(val) {
+            switch (val) {
+                case '离职证明':
+                    this.setContent(`
+                    <div style="margin: 0; padding: 140px; font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;">
+        <div style="text-align: center; margin-bottom: 40px;">
+            <h1 style="margin: 0; font-size: 32px; letter-spacing: 2px; color: #2c3e50;">离职证明</h1>
+        </div>
 
-        // 当用户点击下拉（包含选中已选项时），如果与上次相同则手动触发 selectChange
-        selectClick() {
-            // 如果已经有选中项且用户再次点击同一项（没有变化），手动调用处理逻辑
-            if (this.selectedKey && this.selectedKey === this.lastSelectedKey) {
-                // 手动调用，保证行为一致
-                this.selectChange({ target: { value: this.selectedKey } })
+        <!-- 正文 -->
+        <div style="line-height: 1.8; font-size: 16px; text-align: justify;">
+            <p>兹证明 <strong style="color: #667eea;">张三</strong>（身份证号：110101199001011234）自 <strong style="color: #667eea;">2019年7月1日</strong> 起在我公司 <strong style="color: #667eea;">XX科技有限公司</strong> 任职，担任 <strong style="color: #667eea;">前端开发工程师</strong> 岗位。</p>
+            <p>因个人职业发展规划，已于 <strong style="color: #667eea;">2024年6月30日</strong> 正式办理完离职手续，与我公司解除劳动关系。在职期间表现良好，无不良记录，并完成所有工作交接。</p>
+            <p>特此证明。</p>
+        </div>
+
+        <!-- 落款 -->
+        <div style="margin-top: 60px; text-align: right;">
+            <div style="font-size: 16px; font-weight: 600;">XX科技有限公司</div>
+            <div style="font-size: 14px; color: #666; margin-top: 8px;">2024年7月5日</div>
+        </div>
+
+        <!-- 印章区域 -->
+        <div style="margin-top: 40px; text-align: right;">
+            <div style="display: inline-block; width: 100px; height: 100px; border: 3px solid #e74c3c; border-radius: 50%; text-align: center; line-height: 100px; font-size: 14px; color: #e74c3c; letter-spacing: 1px; user-select: none;">电子印章</div>
+        </div>
+
+        <!-- 底部提示 -->
+        <div style="margin-top: 60px; font-size: 12px; color: #999; text-align: center; border-top: 1px solid #eee; padding-top: 20px;">
+            本证明一式两份，员工与公司各执一份，具有同等法律效力。
+        </div>
+</div>
+                    `)
+                    break;
+                case '离职申请':
+                    this.setContent(`
+                   <div style="margin:0; padding:140px; font-family:-apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;">
+        <!-- 头部 -->
+        <div style="text-align:center; margin-bottom:50px;">
+            <h1 style="margin:0; font-size:36px; letter-spacing:3px; ">离职申请</h1>
+          
+        </div>
+
+        <!-- 称呼 -->
+        <div style="margin-bottom:30px; font-size:16px;">
+            <p>尊敬的 <strong style="">公司领导</strong>：</p>
+        </div>
+
+        <!-- 正文 -->
+        <div style="line-height:1.9; font-size:16px; text-align:justify;">
+            <p>本人 <strong style="color:#764ba2;">张三</strong>（工号：<strong style="color:#764ba2;">EMP2021001</strong>），于 <strong style="color:#764ba2;">2019年7月1日</strong> 入职至今，现任 <strong style="color:#764ba2;">前端开发工程师</strong> 一职。因 <strong style="color:#e74c3c;">个人职业规划调整</strong>，经过慎重考虑，特向您提出 <strong style="color:#e74c3c;">离职申请</strong>，拟最后工作日期为 <strong style="color:#e74c3c;">2024年8月15日</strong>，请予批准。</p>
+            <p>在公司工作的五年里，我收获颇丰，感谢公司提供的发展平台与培养，也感谢领导及同事给予的帮助与支持。后续将严格按照公司流程完成交接，确保工作平稳过渡。</p>
+            <p>恳请领导批准为盼！</p>
+        </div>
+
+        <!-- 落款 -->
+        <div style="margin-top:60px; text-align:right;">
+            <div style="font-size:16px; font-weight:600; margin-bottom:8px;">申请人：张三</div>
+            <div style="font-size:14px; color:#666;">2024年7月5日</div>
+        </div>
+
+        <!-- 手写签名区 -->
+        <div style="margin-top:40px; text-align:right;">
+            <div style="display:inline-block; width:120px; height:80px; border-bottom:2px solid #ddd; position:relative;">
+                <span style="position:absolute; bottom:4px; right:0; font-size:12px; color:#999;">手写签名</span>
+            </div>
+        </div>
+
+        <!-- 底部提示 -->
+        <div style="margin-top:70px; font-size:12px; color:#999; text-align:center; border-top:1px solid #eee; padding-top:20px;">
+            本申请自提交之日起生效，最终解释权归公司人力资源部所有。
+        </div>
+</div>
+                    `)
+                    break;
+                case '面试简历':
+                    this.setContent(`
+                    <body style="margin:0; padding:40px; background-color:#fff; font-family:'微软雅黑',sans-serif; color:#000;">
+    <div style="max-width:800px; margin:0 auto; background-color:#fff; padding:40px 50px;">
+
+        <!-- 个人信息 -->
+        <h1 style="font-size:32px; margin:0 0 10px;">张三</h1>
+        <p style="margin:0 0 20px; line-height:1.6;">
+            电话：138-0000-0000 | 邮箱：zhangsan@example.com |  GitHub：https://github.com/zhangsan<br>
+            求职意向：前端开发工程师 | 工作年限：5年 | 居住地：北京
+        </p>
+
+        <!-- 教育背景 -->
+        <h2 style="border-bottom:1px solid #000; margin:30px 0 10px; padding-bottom:4px;">教育背景</h2>
+        <p style="margin:0 0 6px;"><strong>北京邮电大学</strong>　计算机科学与技术　本科　2015.09 - 2019.06</p>
+
+        <!-- 专业技能 -->
+        <h2 style="border-bottom:1px solid #000; margin:30px 0 10px; padding-bottom:4px;">专业技能</h2>
+        <ul style="margin:0; padding-left:20px;">
+            <li>精通 HTML5 / CSS3 / JavaScript(ES6+) 及 TypeScript</li>
+            <li>熟练 React、Vue3 全家桶，掌握 Hooks、Composition API 设计模式</li>
+            <li>了解 Webpack / Vite 构建配置，重视性能优化与代码分割</li>
+            <li>熟悉 RESTful 与 GraphQL，能配合 Node.js 编写 BFF 接口</li>
+            <li>掌握 Git Flow、Code Review 及单元测试（Jest / Vitest）</li>
+        </ul>
+
+        <!-- 工作经历 -->
+        <h2 style="border-bottom:1px solid #000; margin:30px 0 10px; padding-bottom:4px;">工作经历</h2>
+
+        <div style="margin-bottom:20px;">
+            <p style="margin:0;"><strong>XX科技有限公司</strong>　前端开发工程师　2019.07 - 至今</p>
+            <ul style="margin:4px 0 0; padding-left:20px;">
+                <li>负责企业级中后台产品前端架构，组件库覆盖 5 条业务线，代码复用率提升 40%</li>
+                <li>推动微前端落地，将 3 个老旧 AngularJS 应用无缝迁移至 Vue3 子应用</li>
+                <li>建立性能监控体系，首屏加载时间从 2.8s 降至 1.2s</li>
+            </ul>
+        </div>
+
+        <div style="margin-bottom:20px;">
+            <p style="margin:0;"><strong>YY互联网公司</strong>　前端开发实习生　2018.06 - 2018.09</p>
+            <ul style="margin:4px 0 0; padding-left:20px;">
+                <li>参与电商活动页搭建，使用 Vue + SASS 实现响应式布局，兼容主流移动端</li>
+                <li>编写自动化脚本，将静态资源压缩率提升 25%</li>
+            </ul>
+        </div>
+
+        <!-- 项目经验 -->
+        <h2 style="border-bottom:1px solid #000; margin:30px 0 10px; padding-bottom:4px;">项目经验</h2>
+
+        <div style="margin-bottom:18px;">
+            <p style="margin:0;"><strong>企业级低代码平台</strong>　2022.01 - 2023.06</p>
+            <ul style="margin:4px 0 0; padding-left:20px;">
+                <li>技术栈：React + TypeScript + Vite + Ant Design + Monaco Editor</li>
+                <li>负责页面可视化拖拽引擎核心开发，支持 50+ 业务组件，服务 10+ 内部系统</li>
+                <li>实现 JSON Schema 驱动渲染与实时预览，页面发布效率提升 60%</li>
+            </ul>
+        </div>
+
+        <!-- 自我评价 -->
+        <h2 style="border-bottom:1px solid #000; margin:30px 0 10px; padding-bottom:4px;">自我评价</h2>
+        <p style="margin:0; line-height:1.8;">
+            具备扎实的前端基础与良好的编码习惯，注重代码可读性与可维护性；善于跨团队沟通，能够主动推动项目进度；对新技术保持敏感，乐于分享，多次组织内部技术沙龙。
+        </p>
+
+    </div>
+</body>
+                  `)
+                    break;
+                case '活动通知':
+                    this.setContent(`
+                   <div style="max-width:700px; margin:0 auto; background-color:#fff;  padding:40px 50px;">
+
+        <!-- 标题 -->
+        <h1 style="text-align:center; font-size:32px; margin:0 0 30px;">活动通知</h1>
+
+        <!-- 正文 -->
+        <p style="margin:0 0 20px; line-height:1.8;">
+            为丰富员工业余生活，增强团队凝聚力，公司定于<strong>2024年7月20日（周六）</strong>举行<strong>“夏日健步走”</strong>活动，现将具体事项通知如下：
+        </p>
+
+        <p><strong>一、活动时间</strong><br>
+        2024年7月20日 08:00—11:30</p>
+
+        <p><strong>二、集合地点</strong><br>
+        公司大楼正门广场</p>
+
+        <p><strong>三、参与人员</strong><br>
+        全体在职员工（可自愿携带家属）</p>
+
+        <p><strong>四、活动路线</strong><br>
+        公司广场→滨江公园绿道→折返点→公司广场，全程约6公里。</p>
+
+        <p><strong>五、注意事项</strong></p>
+        <ol style="margin:0; padding-left:20px;">
+            <li>请于07:45前完成签到并领取统一遮阳帽；</li>
+            <li>穿着舒适运动装、运动鞋，自备防晒用品及饮用水；</li>
+            <li>活动设休息点与医疗站，如有身体不适请及时联系工作人员；</li>
+            <li>因天气等原因需调整安排，将提前一天通过企业微信公告。</li>
+        </ol>
+
+        <p style="margin-top:20px;">请各部门于<strong>7月15日17:00前</strong>将参加名单报至行政部，以便统一购买保险及准备物资。</p>
+
+        <!-- 落款 -->
+        <div style="text-align:right; margin-top:40px;">
+            <div style="font-size:16px; font-weight:600;">行政部</div>
+            <div style="font-size:14px; margin-top:6px;">2024年7月5日</div>
+        </div>
+
+    </div>
+                    `)
+                    break;
+                case '多级标题':
+                    this.setContent(`
+                    <div style="margin:0; padding:40px; background-color:#fff; font-family:'微软雅黑',sans-serif; color:#000;">
+
+    <h1 style="font-size:32px; margin:30px 0;">第一章 绪论</h1>
+    <p style="line-height:1.8; margin:10px 0;">
+        人工智能是研究、开发用于模拟、延伸和扩展人的智能的理论、方法、技术及应用系统的一门新的技术科学。人工智能是计算机科学的一个分支，它企图了解智能的实质，并生产出一种新的能以人类智能相似的方式做出反应的智能机器，该领域的研究包括机器人、语言识别、图像识别、自然语言处理和专家系统等。
+    </p>
+
+    <h2 style="font-size:24px; margin:30px 0 15px;">1.1 研究背景</h2>
+    <p style="line-height:1.8; margin:10px 0;">
+        随着互联网、大数据、云计算和物联网等技术不断发展，人类社会的数据呈现爆炸式增长，传统数据处理方法已难以满足需求。人工智能技术的出现，为海量数据的分析和处理提供了新的思路和手段，使得从数据中提取有价值信息成为可能。
+    </p>
+
+    <h3 style="font-size:18px; margin:20px 0 10px;">1.1.1 数据爆炸时代</h3>
+    <p style="line-height:1.8; margin:10px 0;">
+        据统计，全球每天产生的数据量达到数十亿GB，这些数据来自社交媒体、传感器、商业交易等各个领域。数据量的激增对存储、传输和处理能力提出了更高要求，传统的数据处理方法已难以应对。
+    </p>
+
+    <h3 style="font-size:18px; margin:20px 0 10px;">1.1.2 计算能力提升</h3>
+    <p style="line-height:1.8; margin:10px 0;">
+        随着计算机硬件技术的飞速发展，CPU、GPU等计算设备的性能大幅提升，为复杂的人工智能算法提供了强大的计算支持。特别是GPU并行计算能力的发现，使得深度学习等计算密集型任务得以高效运行。
+    </p>
+
+    <h2 style="font-size:24px; margin:30px 0 15px;">1.2 研究意义</h2>
+    <p style="line-height:1.8; margin:10px 0;">
+        人工智能技术的发展，不仅能够提高生产效率，降低人力成本，还能在医疗、教育、交通等领域提供更加智能化的服务。例如，在医疗领域，人工智能可以辅助医生进行疾病诊断，提高诊断的准确性和效率；在教育领域，可以根据学生的学习情况提供个性化的教学方案。
+    </p>
+
+    <h1 style="font-size:32px; margin:30px 0;">第二章 相关技术综述</h1>
+    <p style="line-height:1.8; margin:10px 0;">
+        机器学习是人工智能的核心，它使计算机能够从数据中学习并做出决策或预测。机器学习算法可以分为监督学习、无监督学习和强化学习等类型。监督学习使用标记数据训练模型，无监督学习从未标记数据中发现模式，强化学习则通过与环境交互来学习最优行为策略。
+    </p>
+
+    <h2 style="font-size:24px; margin:30px 0 15px;">2.1 机器学习基础</h2>
+    <p style="line-height:1.8; margin:10px 0;">
+        监督学习是机器学习中最常见的方法之一，它通过训练数据集学习输入与输出之间的映射关系。训练数据集包含输入特征和对应的标签，模型学习的目标是预测新输入数据的标签。常见的监督学习算法包括线性回归、逻辑回归、决策树和支持向量机等。
+    </p>
+
+    <h3 style="font-size:18px; margin:20px 0 10px;">2.1.1 线性回归</h3>
+    <p style="line-height:1.8; margin:10px 0;">
+        线性回归是一种用于建立输入特征与连续输出变量之间关系的统计方法。它假设输入特征与输出变量之间存在线性关系，通过最小化预测值与实际值之间的平方误差来求解模型参数。线性回归简单、易于理解，是许多复杂算法的基础。
+    </p>
+
+    <h3 style="font-size:18px; margin:20px 0 10px;">2.1.2 决策树</h3>
+    <p style="line-height:1.8; margin:10px 0;">
+        决策树是一种树状结构的分类和回归方法，它通过一系列的问题将数据划分为不同的子集。每个内部节点代表一个特征上的测试，每个分支代表测试的一个结果，每个叶节点代表一个类别或数值。决策树易于理解和解释，可以处理数值型和类别型数据。
+    </p>
+
+    <h2 style="font-size:24px; margin:30px 0 15px;">2.2 深度学习概述</h2>
+    <p style="line-height:1.8; margin:10px 0;">
+        深度学习是机器学习的一个分支，它基于人工神经网络，特别是深度神经网络。深度学习模型通常包含多个隐藏层，能够自动学习数据的多层次特征表示。深度学习在图像识别、语音识别和自然语言处理等领域取得了显著成果。
+    </p>
+
+</div>
+                   `)
+                    break;
+                default:
+                    this.setContent('<p>默认内容</p>');
+                    break;
             }
-        },
-        // 数据持久化
-        SaveData(){
-            console.log(this.value);
-            localStorage.setItem('editorContent',this.value)
-        },  
-        init() {
-            // dynamic load tinymce from cdn
-            load(tinymceCDN, (err) => {
-                if (err) {
-                    this.$message.error(err.message)
-                    return
-                }
-                this.initTinymce()
-            })
-        },
-        initTinymce() {
-            // 根据 用户浏览器语言 设置 tinymce 语言
-            if (this.lang === 'zh-cn' || this.lang === 'zh') {
-                this.lang = 'zh'
-            } else {
-                this.lang = 'en'
-            }
-            const _this = this
-            window.tinymce.init({
-                selector: `#${this.tinymceId}`,
-                language: this.languageTypeList[this.lang] || this.languageTypeList['zh'],
-                height: this.height,
-                body_class: 'panel-body ',
-                object_resizing: false,
-                toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
-                menubar: this.menubar,
-                plugins: plugins,
-                end_container_on_empty_block: true,
-                powerpaste_word_import: 'clean',
-                code_dialog_height: 450,
-                code_dialog_width: 1000,
-                advlist_bullet_styles: 'square',
-                advlist_number_styles: 'default',
-                imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
-                default_link_target: '_blank',
-                link_title: false,
-                nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
-                init_instance_callback: editor => {
-                    if (_this.value) {
-                        editor.setContent(_this.value)
+            },
+            toggleFAQ(idx) {
+                this.openIndex = this.openIndex === idx ? -1 : idx
+            },
+            // 数据持久化
+            SaveData(){
+                console.log(this.value);
+                localStorage.setItem('editorContent', this.value)
+            },
+            init() {
+                // dynamic load tinymce from cdn
+                load(tinymceCDN, (err) => {
+                    if (err) {
+                        this.$message.error(err.message)
+                        return
                     }
-                    _this.hasInit = true
-                    editor.on('NodeChange Change KeyUp SetContent', () => {
-                        this.hasChange = true
-                        this.$emit('input', editor.getContent())
-                    })
-                },
-                setup(editor) {
-                    editor.on('FullscreenStateChanged', (e) => {
-                        _this.fullscreen = e.state
-                    })
-                },
-                convert_urls: false
-            })
-        },
-        destroyTinymce() {
-            const tinymce = window.tinymce.get(this.tinymceId)
-            if (this.fullscreen) {
-                tinymce.execCommand('mceFullScreen')
-            }
+                    this.initTinymce()
+                })
+            },
+            initTinymce() {
+                // 根据 用户浏览器语言 设置 tinymce 语言
+                if (this.lang === 'zh-cn' || this.lang === 'zh') {
+                    this.lang = 'zh'
+                } else {
+                    this.lang = 'en'
+                }
+                const _this = this
+                window.tinymce.init({
+                    selector: `#${this.tinymceId}`,
+                    language: this.languageTypeList[this.lang] || this.languageTypeList['zh'],
+                    height: this.height,
+                    body_class: 'panel-body ',
+                    object_resizing: false,
+                    toolbar: this.toolbar.length > 0 ? this.toolbar : toolbar,
+                    menubar: this.menubar,
+                    plugins: plugins,
+                    end_container_on_empty_block: true,
+                    powerpaste_word_import: 'clean',
+                    code_dialog_height: 450,
+                    code_dialog_width: 1000,
+                    advlist_bullet_styles: 'square',
+                    advlist_number_styles: 'default',
+                    imagetools_cors_hosts: ['www.tinymce.com', 'codepen.io'],
+                    default_link_target: '_blank',
+                    link_title: false,
+                    nonbreaking_force_tab: true, // inserting nonbreaking space &nbsp; need Nonbreaking Space Plugin
+                    init_instance_callback: editor => {
+                        if (_this.value) {
+                            editor.setContent(_this.value)
+                        }
+                        _this.hasInit = true
+                        editor.on('NodeChange Change KeyUp SetContent', () => {
+                            this.hasChange = true
+                            this.$emit('input', editor.getContent())
+                        })
+                    },
+                    setup(editor) {
+                        editor.on('FullscreenStateChanged', (e) => {
+                            _this.fullscreen = e.state
+                        })
+                    },
+                    convert_urls: false
+                })
+            },
+            destroyTinymce() {
+                const tinymce = window.tinymce.get(this.tinymceId)
+                if (this.fullscreen) {
+                    tinymce.execCommand('mceFullScreen')
+                }
 
-            if (tinymce) {
-                tinymce.destroy()
+                if (tinymce) {
+                    tinymce.destroy()
+                }
+            },
+            setContent(value) {
+                window.tinymce.get(this.tinymceId).setContent(value)
+            },
+            getContent() {
+                window.tinymce.get(this.tinymceId).getContent()
+            },
+            imageSuccessCBK(arr) {
+                arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`))
             }
-        },
-        setContent(value) {
-            window.tinymce.get(this.tinymceId).setContent(value)
-        },
-        getContent() {
-            window.tinymce.get(this.tinymceId).getContent()
-        },
-        imageSuccessCBK(arr) {
-            arr.forEach(v => window.tinymce.get(this.tinymceId).insertContent(`<img class="wscnph" src="${v.url}" >`))
         }
     }
-}
 </script>
 
-<style >
+<style>
 .tinymce-container {
     position: relative;
     line-height: normal;
@@ -363,81 +563,6 @@ export default {
         }
     }
 }
-.tinyMCE-toolbar select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    display: inline-block;
-    min-width: 170px;
-    padding: 9px 44px 9px 14px;
-    /* room for text + chevron */
-    font-size: 14px;
-    line-height: 1;
-    color: #0b0b0b;
-    background: linear-gradient(180deg, #f3f7fa 0%, #f3f7fa 100%);
-    border: 1px solid rgba(11, 104, 216, 0.12);
-    border-radius: 10px;
-    box-shadow: 0 6px 18px rgba(11, 104, 216, 0.04);
-    cursor: pointer;
-    transition: transform .16s ease, box-shadow .16s ease, border-color .16s ease, background .16s ease;
-    background-repeat: no-repeat;
-    background-position: right 12px center;
-    background-size: 18px;
-    margin-left: 10px;
-    border: 1px solid #0b68d8;
-}
-
-/* hide native IE/Edge dropdown arrow */
-.tinyMCE-toolbar select::-ms-expand {
-    display: none;
-}
-
-/* hover / elevated look */
-.tinyMCE-toolbar select:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 30px rgba(11, 104, 216, 0.10);
-    border-color: rgba(11, 104, 216, 0.18);
-    background: linear-gradient(180deg, #ffffff 0%, #eef6ff 100%);
-}
-
-/* focus for accessibility */
-.tinyMCE-toolbar select:focus {
-    outline: none;
-    box-shadow: 0 0 0 6px rgba(11, 104, 216, 0.08);
-    border-color: #0b68d8;
-}
-
-/* disabled */
-.tinyMCE-toolbar select:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
-
-/* Option styling - limited by browser, but keep sane defaults */
-.tinyMCE-toolbar select option {
-    padding: 8px;
-    background: #fff;
-    color: #0b0b0b;
-}
-
-/* responsive: reduce width & padding on small screens */
-@media (max-width: 720px) {
-    .tinyMCE-toolbar select {
-        min-width: 140px;
-        padding: 8px 38px 8px 10px;
-        font-size: 13px;
-    }
-}
-
-/* Optional: provide a fully styled "fake" dropdown hook if you need custom markup later */
-.tinyMCE-toolbar .custom-select {
-    position: relative;
-    display: inline-block;
-}
-
-.tinyMCE-toolbar .custom-select__button {
-    /* reuse select visual style */
-}
 
 .zhen {
     display: inline-flex;
@@ -447,7 +572,7 @@ export default {
     border-radius: 6px;
     background: rgba(11, 104, 216, 0.06);
     /* 主题色轻微底色 */
-    color: #0b68d8;
+    color: #fff;
     /* 主题色文字 */
     border: 1px solid rgba(11, 104, 216, 0.12);
     font-weight: 600;
@@ -456,6 +581,7 @@ export default {
     transition: transform .18s ease, box-shadow .18s ease, background .18s ease, color .18s ease;
     user-select: none;
     margin-left: 10px;
+    background-color: var(--primary);
 }
 
 
@@ -529,8 +655,8 @@ export default {
 }
 
 .tinyMCE-toolbar {
-    width: 60vw;
-    height:4vh;
+    width: 45vw;
+    height: 4vh;
     line-height: 4vh;
     text-align: left;
     margin: 0 auto;
@@ -539,4 +665,6 @@ export default {
     justify-content: space-between;
     align-items: center;
 }
+
+
 </style>

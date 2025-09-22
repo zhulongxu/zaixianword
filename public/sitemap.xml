@@ -7,26 +7,4 @@
     <changefreq>monthly</changefreq>
     <priority>1.0</priority>
   </url>
-
-  <!-- 编辑器 / Markdown / OCR 路由示例 -->
-  <url>
-    <loc>https://zaixianword.top/#/editor</loc>
-    <lastmod>2025-09-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://zaixianword.top/#/markdown</loc>
-    <lastmod>2025-09-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
-  </url>
-
-  <url>
-    <loc>https://zaixianword.top/#/ocr</loc>
-    <lastmod>2025-09-19</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.6</priority>
-  </url>
 </urlset>
